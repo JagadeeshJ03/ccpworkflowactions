@@ -46,7 +46,8 @@ jobs:
       - name: Generate Crossplane Claim YAML
         run: |
           # Replace this with your script to generate the Crossplane claim YAML content
-          cat <<EOF > ${{fromJson(inputs.bucketname).context.bucketname}}.yaml
+          bucket_name="${{ github.event.inputs.bucketname }}"
+          cat <<EOF > "${bucket_name}.yaml"
           apiVersion: s3.aws.upbound.io/v1beta1
           kind: Bucket
           metadata:
@@ -63,9 +64,10 @@ jobs:
           EOF
       - name: Commit and push changes
         run: |
+          bucket_name="${{ github.event.inputs.bucketname }}"
           git config user.name "JagadeeshJ03"
           git config user.email "jjagadeeshgouda1996@gmail.com"
-          git add ${{fromJson(inputs.bucketname).context.bucketname}}.yaml
+          git add "${bucket_name}.yaml"
           git commit -m "Generate Crossplane Claim YAML testing file"
           git remote add origin_with_token https://$GITHUB_ACTOR:${{ secrets.YOUR_PAT_SECRET }}@github.com/JagadeeshJ03/ccpworkflowactions.git
           git push
