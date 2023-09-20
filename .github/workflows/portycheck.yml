@@ -43,7 +43,7 @@ jobs:
       - name: Generate Crossplane Claim YAML
         run: |
           # Replace this with your script to generate the Crossplane claim YAML content
-          cat <<EOF > ${{fromJson(inputs.bucketname).context.bucketname}}.yaml
+          cat <<EOF > testing.yaml
           apiVersion: s3.aws.upbound.io/v1beta1
           kind: Bucket
           metadata:
