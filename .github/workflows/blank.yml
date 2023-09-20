@@ -45,20 +45,3 @@ jobs:
           git add crossplane_claim.yaml
           git commit -m "Generate Crossplane Claim YAML"
           git push
-      - name: Create a log message
-        uses: port-labs/port-github-action@v1
-        with:
-            clientId: ${{ secrets.PORT_CLIENT_ID }}
-            clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-            operation: PATCH_RUN
-            runId: ${{fromJson(inputs.port_payload).context.runId}}
-            logMessage: An example of a log message
-      - name: Update action run status
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          status: SUCCESS
-          logMessage: Workflow completed successfully
