@@ -60,7 +60,7 @@ jobs:
           EOF
       - name: Commit and push changes
         run: |
-          git config user.name "campusterminalhub"
+          git config user.name "JagadeeshJ03"
           git config user.email "jjagadeeshgouda1996@gmail.com"
           git add crossplane_claim.yaml
           git commit -m "Generate Crossplane Claim YAML"
