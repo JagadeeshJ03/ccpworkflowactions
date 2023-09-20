@@ -40,6 +40,31 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
           runId: ${{fromJson(inputs.port_payload).context.runId}}
+      - name: Generate Crossplane Claim YAML
+        run: |
+          # Replace this with your script to generate the Crossplane claim YAML content
+          cat <<EOF > testingcrossplane_claim.yaml
+          apiVersion: s3.aws.upbound.io/v1beta1
+          kind: Bucket
+          metadata:
+            name: crossplane-argo-ccp-bucket1-testing
+          spec:
+            forProvider:
+              region: us-east-1
+              tags:
+                project: CCP
+                env: dev
+                aws: eks
+            providerConfigRef:
+              name: newawsconfig
+          EOF
+      - name: Commit and push changes
+        run: |
+          git config user.name "campusterminalhub"
+          git config user.email "jjagadeeshgouda1996@gmail.com"
+          git add testingcrossplane_claim.yaml
+          git commit -m "Generate Crossplane Claim YAML testing file"
+          git push
       - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
