@@ -40,10 +40,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
           runId: ${{fromJson(inputs.port_payload).context.runId}}
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Generate Crossplane Claim YAML
         run: |
           # Replace this with your script to generate the Crossplane claim YAML content
-          cat <<EOF > testingcrossplane_claim.yaml
+          cat <<EOF > ${{fromJson(inputs.bucketname).context.bucketname}}.yaml
           apiVersion: s3.aws.upbound.io/v1beta1
           kind: Bucket
           metadata:
@@ -62,7 +65,7 @@ jobs:
         run: |
           git config user.name "JagadeeshJ03"
           git config user.email "jjagadeeshgouda1996@gmail.com"
-          git add testingcrossplane_claim.yaml
+          git add ${{fromJson(inputs.bucketname).context.bucketname}}.yaml
           git commit -m "Generate Crossplane Claim YAML testing file"
           git remote add origin_with_token https://$GITHUB_ACTOR:${{ secrets.YOUR_PAT_SECRET }}@github.com/JagadeeshJ03/ccpworkflowactions.git
           git push
