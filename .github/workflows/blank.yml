@@ -23,7 +23,7 @@ jobs:
       - name: Generate Crossplane Claim YAML
         run: |
           # Replace this with your script to generate the Crossplane claim YAML content
-          cat <<EOF > crossplane_claim.yaml
+          cat <<EOF > crossplane_claimtest.yaml
           apiVersion: s3.aws.upbound.io/v1beta1
           kind: Bucket
           metadata:
@@ -42,6 +42,6 @@ jobs:
         run: |
           git config user.name "campusterminalhub"
           git config user.email "jjagadeeshgouda1996@gmail.com"
-          git add crossplane_claim.yaml
+          git add crossplane_claimtest.yaml
           git commit -m "Generate Crossplane Claim YAML"
           git push
